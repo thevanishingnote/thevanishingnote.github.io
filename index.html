@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Artisan's Study | Dark Edition</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. CORE THEME (STRICT DARK MODE)
+           ========================================= */
+        :root {
+            --bg-dark: #050505;        /* Pitch Black */
+            --bg-light: #1c1c1c;       /* Charcoal */
+            --text-main: #e0e0e0;      /* Silver */
+            --text-dim: #a0a0a0;       /* Grey */
+            --accent-gold: #d4af37;    /* Metallic Gold */
+            --accent-green: #1b4d2e;   /* Hunter Green */
+            --border-color: #333333;   /* Dark Borders */
+            --card-bg: #111111;        /* Dark Card Background */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            /* Force override of any old beige settings */
+            background-color: var(--bg-dark) !important;
+            background-image: linear-gradient(to bottom, #000000, #1a1a1a);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. HEADER & SHINING ANIMATION
+           ========================================= */
+        header {
+            padding: 5rem 1rem 3rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            background: radial-gradient(circle at top, #222, #000);
+        }
+
+        @keyframes metallicShine {
+            0% { background-position: -100%; }
+            100% { background-position: 200%; }
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            
+            /* The Silver Shine Effect */
+            background: linear-gradient(to right, #4d4d4d 0%, #ffffff 50%, #4d4d4d 100%);
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metallicShine 3s linear infinite;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           3. HOME PAGE (CATEGORIES)
+           ========================================= */
+        #home-view {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .category-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            width: 400px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            border-color: #fff;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1); /* Silver Glow */
+        }
+
+        .video-preview-box {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border: 1px solid #222;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .video-preview-box video, 
+        .video-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .category-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* =========================================
+           4. PRODUCT GRID & CARDS
+           ========================================= */
+        .product-section {
+            display: none; /* Hidden by default */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            font-family: 'Cinzel', serif;
+            display: inline-block;
+            margin-bottom: 3rem;
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid #555;
+            transition: 0.3s;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 4rem;
+        }
+
+        .item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .item h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            color: #fff;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* BADGES (Best Seller / Low Stock) */
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 8px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+        .badge-best { background: #fff; color: #000; }
+        .badge-low { background: #8b0000; color: #fff; }
+
+        /* DROPDOWNS */
+        .options-container { margin-bottom: 1.5rem; }
+        .options-container label {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .custom-select {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #444;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* ACTION BUTTON */
+        .btn-cod {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--accent-green);
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-cod:hover {
+            background-color: #266e3f;
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+
+        /* TRUST STRIP (Beneath Button) */
+        .trust-strip {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* =========================================
+           5. REVIEWS & POPUPS
+           ========================================= */
+        
+        /* Animated Popup (Toast) */
+        #popup-container {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            z-index: 999;
+            pointer-events: none;
+        }
+        .review-toast {
+            background: #000;
+            border: 1px solid #fff;
+            padding: 15px;
+            width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+            text-align: left;
+            color: #fff;
+            /* Start hidden */
+            transform: translateX(-120%);
+            transition: transform 0.5s ease-out;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .review-toast.show { transform: translateX(0); }
+        
+        .toast-img {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #555;
+        }
+        .stars { color: var(--accent-gold); letter-spacing: 2px; font-size: 0.8rem; }
+
+        /* Static Reviews Section */
+        .reviews-container {
+            margin-top: 6rem;
+            padding-top: 3rem;
+            border-top: 1px solid #333;
+            text-align: left;
+        }
+        .reviews-container h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            font-size: 2rem;
+        }
+        .review-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .review-pic {
+            width: 70px; height: 70px;
+            object-fit: cover;
+            border: 1px solid #fff;
+        }
+
+        .submit-review-btn {
+            display: block;
+            width: fit-content;
+            margin: 3rem auto;
+            padding: 15px 30px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: 0.3s;
+        }
+        .submit-review-btn:hover { background: #fff; color: #000; }
+
+        /* Footer */
+        footer {
+            margin-top: 5rem;
+            padding: 2rem;
+            color: #555;
+            border-top: 1px solid #222;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>The Artisan's Study</h1>
+        <p>Optical Curiosities & Hidden Art</p>
+    </header>
+
+    <div id="popup-container">
+        <div class="review-toast" id="toast">
+            <img src="customer1.jpg" class="toast-img" id="toast-img" alt="Customer">
+            <div class="toast-text">
+                <span class="stars">★★★★★</span>
+                <strong id="toast-name">Arjun K.</strong>
+                <span id="toast-msg">"Fits perfectly."</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="home-view">
+        
+        <div class="category-card" onclick="showSection('books-section')">
+            <div class="video-preview-box">
+                <video muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()">
+                    <source src="book-preview.mp4" type="video/mp4">
+                </video>
+            </div>
+            <h2 class="category-title">Fore-Edge Paintings</h2>
+            <p style="color: #aaa">Hidden art revealed only when fanned.</p>
+        </div>
+
+        <div class="category-card" onclick="showSection('monocles-section')">
+            <div class="video-preview-box">
+                <video muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()">
+                    <source src="monocle-preview.mp4" type="video/mp4">
+                </video>
+            </div>
+            <h2 class="category-title">Custom Monocles</h2>
+            <p style="color: #aaa">Sterling silver & gold optical wear.</p>
+        </div>
+
+    </div>
+
+    <div id="books-section" class="product-section">
+        <div onclick="goHome()" class="back-btn">← Back to Study</div>
+        
+        <div class="grid">
+            
+            <article class="item">
+                <span class="badge badge-best">Best Seller</span>
+                <div class="video-preview-box" style="height: 250px;">
+                    <img src="book-1.jpg" alt="Book">
+                </div>
+                <h3>Pride & Prejudice</h3>
+                <span class="price">₹4,500</span>
+                
+                <div class="options-container">
+                    <label>Select Edition:</label>
+                    <select class="custom-select" id="book1-opt">
+                        <option value="Hardcover">Collector's Hardcover</option>
+                        <option value="Paperback">Vintage Paperback (-₹500)</option>
+                    </select>
+                </div>
+                
+                <button onclick="orderItem('Pride & Prejudice', 'book1-opt')" class="btn-cod">ORDER VIA WHATSAPP</button>
+                
+                <div class="trust-strip">
+                    <span>🚚 7-10 Day Delivery</span>
+                    <span>💸 Free COD</span>
+                </div>
+            </article>
+
+            <article class="item">
+                <span class="badge badge-low">Only 1 Left</span>
+                <div class="video-preview-box" style="height: 250px;">
+                    <img src="book-2.jpg" alt="Book">
+                </div>
+                <h3>Sherlock Holmes</h3>
+                <span class="price">₹5,200</span>
+                
+                <div class="options-container">
+                    <label>Binding Color:</label>
+                    <select class="custom-select" id="book2-opt">
+                        <option value="Blue Leather">Midnight Blue Leather</option>
+                        <option value="Black Leather">Onyx Black Leather</option>
+                    </select>
+                </div>
+                
+                <button onclick="orderItem('Sherlock Holmes', 'book2-opt')" class="btn-cod">ORDER VIA WHATSAPP</button>
+                
+                <div class="trust-strip">
+                    <span>🚚 7-10 Day Delivery</span>
+                    <span>💸 Free COD</span>
+                </div>
+            </article>
+
+            <article class="item">
+                <div class="video-preview-box" style="height: 250px;">
+                    <img src="book-3.jpg" alt="Book">
+                </div>
+                <h3>The Great Gatsby</h3>
+                <span class="price">₹4,800</span>
+                
+                <div class="options-container">
+                    <label>Cover Style:</label>
+                    <select class="custom-select" id="book3-opt">
+                        <option value="1920s Replica">1920s Replica</option>
+                        <option value="Modern">Modern Hardcover</option>
+                    </select>
+                </div>
+                
+                <button onclick="orderItem('The Great Gatsby', 'book3-opt')" class="btn-cod">ORDER VIA WHATSAPP</button>
+                
+                <div class="trust-strip">
+                    <span>🚚 7-10 Day Delivery</span>
+                    <span>💸 Free COD</span>
+                </div>
+            </article>
+        </div>
+
+        <div class="reviews-container">
+            <h2>From the Archives</h2>
+            
+            <div class="review-card">
+                <img src="customer-book.jpg" class="review-pic" alt="User">
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p style="font-style: italic; color: #ccc; margin-top:5px;">"The painting is invisible until you fan it. Truly magical."</p>
+                    <p style="margin-top:10px; font-weight:bold;">- Priya S.</p>
+                </div>
+            </div>
+
+            <a href="mailto:email@example.com" class="submit-review-btn">Submit Your Review</a>
+        </div>
+    </div>
+
+    <div id="monocles-section" class="product-section">
+        <div onclick="goHome()" class="back-btn">← Back to Study</div>
+
+        <div class="grid">
+            
+            <article class="item">
+                <span class="badge badge-best">Best Seller</span>
+                <div class="video-preview-box" style="height: 250px;">
+                    <video autoplay loop muted playsinline>
+                        <source src="monocle-1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <h3>The Sterling Silver</h3>
+                <span class="price">₹2,499</span>
+                
+                <div class="options-container">
+                    <label>Magnification Power:</label>
+                    <select class="custom-select" id="monocle1-opt">
+                        <option value="+1.00">+1.00 (Reading)</option>
+                        <option value="+1.50">+1.50 (Standard)</option>
+                        <option value="+2.00">+2.00 (Strong)</option>
+                        <option value="Plano">Plano (Fashion)</option>
+                    </select>
+                </div>
+                
+                <button onclick="orderItem('Silver Monocle', 'monocle1-opt')" class="btn-cod">ORDER VIA WHATSAPP</button>
+                
+                <div class="trust-strip">
+                    <span>🚚 7-10 Day Delivery</span>
+                    <span>💸 Free COD</span>
+                </div>
+            </article>
+
+            <article class="item">
+                <div class="video-preview-box" style="height: 250px;">
+                    <img src="gold-monocle.jpg" alt="Monocle">
+                </div>
+                <h3>The Gilded Gold</h3>
+                <span class="price">₹1,899</span>
+                
+                <div class="options-container">
+                    <label>Magnification Power:</label>
+                    <select class="custom-select" id="monocle2-opt">
+                        <option value="+1.00">+1.00 (Reading)</option>
+                        <option value="+1.50">+1.50 (Standard)</option>
+                        <option value="+2.00">+2.00 (Strong)</option>
+                        <option value="Plano">Plano (Fashion)</option>
+                    </select>
+                </div>
+                
+                <button onclick="orderItem('Gold Monocle', 'monocle2-opt')" class="btn-cod">ORDER VIA WHATSAPP</button>
+                
+                <div class="trust-strip">
+                    <span>🚚 7-10 Day Delivery</span>
+                    <span>💸 Free COD</span>
+                </div>
+            </article>
+        </div>
+
+        <div class="reviews-container">
+            <h2>From the Archives</h2>
+            
+            <div class="review-card">
+                <img src="customer-monocle.jpg" class="review-pic" alt="User">
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p style="font-style: italic; color: #ccc; margin-top:5px;">"Great quality silver. Feels very sturdy."</p>
+                    <p style="margin-top:10px; font-weight:bold;">- Rohan M.</p>
+                </div>
+            </div>
+
+            <a href="mailto:email@example.com" class="submit-review-btn">Submit Your Review</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 The Artisan's Study</p>
+    </footer>
+
+    <script>
+        // --- 1. NAVIGATION LOGIC ---
+        function showSection(sectionId) {
+            // Hide Home
+            document.getElementById('home-view').style.display = 'none';
+            // Hide Product Sections
+            document.getElementById('books-section').style.display = 'none';
+            document.getElementById('monocles-section').style.display = 'none';
+            
+            // Show Selected Section
+            document.getElementById(sectionId).style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function goHome() {
+            document.getElementById('books-section').style.display = 'none';
+            document.getElementById('monocles-section').style.display = 'none';
+            document.getElementById('home-view').style.display = 'flex';
+        }
+
+        // --- 2. ORDER LOGIC (WHATSAPP) ---
+        function orderItem(itemName, selectId) {
+            var selectedOption = document.getElementById(selectId).value;
+            // IMPORTANT: Change this number to your own
+            var phoneNumber = "919999999999"; 
+            
+            var message = "Hello! I would like to order: " + itemName + " (" + selectedOption + ") via COD. My address is: ";
+            
+            var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+            window.open(url, '_blank');
+        }
+
+        // --- 3. ANIMATED REVIEWS LOGIC ---
+        const reviews = [
+            { name: "Arjun K.", msg: "Fits perfectly!", img: "customer1.jpg" },
+            { name: "Sara L.", msg: "Stunning work.", img: "customer2.jpg" },
+            { name: "Dev P.", msg: "Best gift ever.", img: "customer3.jpg" }
+        ];
+
+        let index = 0;
+        const toast = document.getElementById('toast');
+        const tName = document.getElementById('toast-name');
+        const tMsg = document.getElementById('toast-msg');
+        const tImg = document.getElementById('toast-img');
+
+        function cycleReviews() {
+            // Only show reviews if we are on the Home View
+            if(document.getElementById('home-view').style.display !== 'none') {
+                // Update Content
+                tName.innerText = reviews[index].name;
+                tMsg.innerText = reviews[index].msg;
+                tImg.src = reviews[index].img;
+                
+                // Show
+                toast.classList.add('show');
+                
+                // Hide after 4 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+
+                // Increment Index
+                index = (index + 1) % reviews.length;
+            }
+        }
+
+        // Run loop every 8 seconds
+        setInterval(cycleReviews, 8000);
+        // Run once immediately
+        setTimeout(cycleReviews, 2000);
+    </script>
+
+</body>
+</html>
+
+```
